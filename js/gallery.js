@@ -1,38 +1,53 @@
 import { apiSources } from "./api-data.js";
 
+function getDynamicURI(api) {
+
+    if (!api.urn.includes("RANDOM") && api.urn !== "") {
+        const sep = api.urn.includes("?") ? "&" : "?";
+        return api.baseUrl + api.urn + sep + "t=" + Date.now();
+    }
+
+    if (api.urn === "RANDOM_FOX") {
+        const id = Math.floor(Math.random() * 123) + 1;
+        return `${api.baseUrl}/${id}.jpg`;
+    }
+
+    if (api.baseUrl.includes("random-d.uk")) {
+        return api.baseUrl + "?t=" + Date.now();
+    }
+}
+
 export function buildGallery() {
-    const container = document.getElementById("gallery");
-    container.innerHTML = "";
+    const gallery = document.getElementById("gallery");
+    gallery.innerHTML = "";
 
     apiSources.forEach((api, index) => {
-        const uri = api.baseUrl + api.urn;
+        const uri = getDynamicURI(api);
 
         const card = `
-            <div class="bg-white rounded shadow p-3 flex flex-col items-center">
-                <img id="img-${index}" 
-                     src="${uri}" 
-                     class="w-[100px] h-[100px] object-cover rounded"
-                     alt="${api.name}"/>
+            <div class="bg-white rounded-lg shadow p-4 text-center">
+                <img id="img-${index}"
+                    src="${uri}"
+                    class="w-[100px] h-[100px] object-cover rounded mx-auto"
+                    alt="${api.name}">
 
-                <h3 class="text-sm mt-2 font-semibold">${api.name}</h3>
-                <p class="text-xs text-gray-600">${api.notes}</p>
+                <h3 class="text-md font-semibold mt-3">${api.name}</h3>
+                <p class="text-sm text-gray-600">${api.notes}</p>
 
-                <p class="text-[10px] mt-1 text-gray-500 break-all">
-                    <strong>URI:</strong>
+                <p class="text-[11px] mt-2 text-gray-500 break-all">
+                    <strong>URI:</strong> 
                     <span id="uri-${index}">${uri}</span>
                 </p>
             </div>
         `;
 
-        container.innerHTML += card;
+        gallery.innerHTML += card;
     });
 }
 
 export function reloadImages() {
     apiSources.forEach((api, index) => {
-        const sep = api.urn.includes("?") ? "&" : "?";
-        const newUrn = api.urn + sep + "t=" + Date.now();
-        const newUri = api.baseUrl + newUrn;
+        const newUri = getDynamicURI(api);
 
         document.getElementById(`img-${index}`).src = newUri;
         document.getElementById(`uri-${index}`).textContent = newUri;

@@ -5,17 +5,27 @@ export function buildTable() {
     tbody.innerHTML = "";
 
     apiSources.forEach(api => {
-        const uri = api.baseUrl + api.urn;
+        const uriPreview = api.urn.includes("RANDOM")
+            ? "Generado dinámicamente"
+            : api.baseUrl + api.urn;
 
         const row = `
-            <tr class="border-b">
-                <td class="p-2">${api.name}</td>
-                <td class="p-2 text-blue-600">${api.baseUrl}</td>
-                <td class="p-2">${api.urn}</td>
-                <td class="p-2 break-all text-gray-700">${uri}</td>
-                <td class="p-2 text-gray-600">${api.notes}</td>
+            <tr class="bg-white border-b border-default">
+                <th class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+                    ${api.name}
+                </th>
+
+                <td class="px-6 py-4 text-blue-600">${api.baseUrl}</td>
+                <td class="px-6 py-4">${api.urn || "—"}</td>
+
+                <td class="px-6 py-4 break-all text-gray-700">
+                    ${uriPreview}
+                </td>
+
+                <td class="px-6 py-4">${api.notes}</td>
             </tr>
         `;
+
         tbody.innerHTML += row;
     });
 }

@@ -5,5 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     buildTable();
     buildGallery();
 
-    document.getElementById("reload-btn").addEventListener("click", reloadImages);
+    document.getElementById("reload-btn")
+        .addEventListener("click", reloadImages);
+
+    setInterval(reloadImages, 10000);
 });
