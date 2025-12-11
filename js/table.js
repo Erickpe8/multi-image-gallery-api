@@ -5,9 +5,10 @@ export function buildTable() {
     tbody.innerHTML = "";
 
     apiSources.forEach(api => {
-        const uriPreview = api.urn.includes("RANDOM")
-            ? "Generado dinámicamente"
-            : api.baseUrl + api.urn;
+
+        const uriDescription = api.type === "direct"
+            ? `${api.baseUrl}${api.urn || ""} (URI base)`
+            : `${api.baseUrl} (JSON → imagen)`;
 
         const row = `
             <tr class="bg-white border-b border-default">
@@ -16,13 +17,18 @@ export function buildTable() {
                 </th>
 
                 <td class="px-6 py-4 text-blue-600">${api.baseUrl}</td>
-                <td class="px-6 py-4">${api.urn || "—"}</td>
 
-                <td class="px-6 py-4 break-all text-gray-700">
-                    ${uriPreview}
+                <td class="px-6 py-4">
+                    ${api.urn || "—"}
                 </td>
 
-                <td class="px-6 py-4">${api.notes}</td>
+                <td class="px-6 py-4 break-all text-gray-700">
+                    ${uriDescription}
+                </td>
+
+                <td class="px-6 py-4">
+                    ${api.notes}
+                </td>
             </tr>
         `;
 

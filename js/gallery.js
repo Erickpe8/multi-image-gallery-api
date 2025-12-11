@@ -2,18 +2,19 @@ import { apiSources } from "./api-data.js";
 
 function getDynamicURI(api) {
 
-    if (!api.urn.includes("RANDOM") && api.urn !== "") {
-        const sep = api.urn.includes("?") ? "&" : "?";
-        return api.baseUrl + api.urn + sep + "t=" + Date.now();
+    if (api.urn !== "" && !api.urn.includes("RANDOM")) {
+        const base = api.baseUrl + api.urn;
+        return base + (base.includes("?") ? "&" : "?") + "nocache=" + Date.now();
     }
 
     if (api.urn === "RANDOM_FOX") {
         const id = Math.floor(Math.random() * 123) + 1;
-        return `${api.baseUrl}/${id}.jpg`;
+
+        return `${api.baseUrl}/${id}.jpg?nocache=${Date.now()}`;
     }
 
     if (api.baseUrl.includes("random-d.uk")) {
-        return api.baseUrl + "?t=" + Date.now();
+        return `${api.baseUrl}?nocache=${Date.now()}&rand=${Math.random()}`;
     }
 }
 
@@ -24,7 +25,7 @@ export function buildGallery() {
     apiSources.forEach((api, index) => {
         const uri = getDynamicURI(api);
 
-        const card = `
+        gallery.innerHTML += `
             <div class="bg-white rounded-lg shadow p-4 text-center">
                 <img id="img-${index}"
                     src="${uri}"
@@ -40,8 +41,6 @@ export function buildGallery() {
                 </p>
             </div>
         `;
-
-        gallery.innerHTML += card;
     });
 }
 
@@ -49,7 +48,10 @@ export function reloadImages() {
     apiSources.forEach((api, index) => {
         const newUri = getDynamicURI(api);
 
-        document.getElementById(`img-${index}`).src = newUri;
-        document.getElementById(`uri-${index}`).textContent = newUri;
+        const img = document.getElementById(`img-${index}`);
+        const label = document.getElementById(`uri-${index}`);
+
+        img.src = newUri;
+        label.textContent = newUri;
     });
 }

@@ -2,11 +2,17 @@ import { buildTable } from "./table.js";
 import { buildGallery, reloadImages } from "./gallery.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+
     buildTable();
     buildGallery();
 
-    document.getElementById("reload-btn")
-        .addEventListener("click", reloadImages);
+    const btn = document.getElementById("reload-btn");
+    if (btn) {
+        btn.addEventListener("click", reloadImages);
+    }
 
-    setInterval(reloadImages, 10000);
+    setInterval(() => {
+        console.log(" Actualizando imágenes...");
+        reloadImages();
+    }, 10000);
 });
