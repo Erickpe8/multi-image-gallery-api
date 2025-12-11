@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
     <meta charset="UTF-8">
     <title>Galería dinámica de imágenes — Tailwind</title>
 
@@ -20,6 +24,13 @@
         .text-body { color: #374151; }
         .text-heading { color: #111827; }
     </style>
+
+    <script>
+        const script = document.createElement("script");
+        script.type = "module";
+        script.src = "./js/main.js?v=" + Date.now();
+        document.head.appendChild(script);
+    </script>
 </head>
 
 <body class="bg-gray-100 text-gray-900">
@@ -32,10 +43,9 @@
 
         <p class="text-center text-gray-600 text-lg mb-8">
             Genera imágenes aleatorias cada diez segundos
-        </p> 
+        </p>
 
         <section class="mb-10">
-
             <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default bg-white">
                 <table class="w-full text-sm text-left rtl:text-right text-body">
 
@@ -62,8 +72,6 @@
         </section>
 
     </div>
-
-    <script type="module" src="./js/main.js"></script>
 
 </body>
 </html>
