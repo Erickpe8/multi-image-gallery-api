@@ -2,57 +2,64 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Galería con APIs de imágenes — Tailwind</title>
+    <title>Galería dinámica de imágenes — Tailwind</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+        :root {
+            --neutral-primary-soft: #ffffff;
+            --neutral-secondary-soft: #1f2937;
+            --default-border: #d1d5db;
+        }
+        .bg-neutral-primary-soft { background-color: var(--neutral-primary-soft); }
+        .bg-neutral-secondary-soft { background-color: var(--neutral-secondary-soft); }
+        .border-default { border-color: var(--default-border); }
+        .shadow-xs { box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+        .rounded-base { border-radius: 0.5rem; }
+        .text-body { color: #374151; }
+        .text-heading { color: #111827; }
+    </style>
 </head>
+
 <body class="bg-gray-100 text-gray-900">
 
     <div class="max-w-6xl mx-auto py-6 px-4">
 
-        <h1 class="text-3xl font-bold text-center mb-4">
-            Galería dinámica con múltiples APIs de imágenes (100x100)
+        <h1 class="text-4xl font-bold text-center mb-2">
+            Galería dinámica de imágenes
         </h1>
 
-        <p class="text-center text-gray-600 mb-8">
-            Todas las imágenes se generan directamente desde APIs sin modificar el tamaño.
-        </p>
+        <p class="text-center text-gray-600 text-lg mb-8">
+            Genera imágenes aleatorias cada diez segundos
+        </p> 
 
         <section class="mb-10">
-            <h2 class="text-xl font-semibold mb-3">URL, URN y URI de cada API</h2>
 
-            <div class="overflow-x-auto bg-white rounded shadow">
-                <table class="w-full text-sm">
-                    <thead class="bg-gray-900 text-gray-100">
+            <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default bg-white">
+                <table class="w-full text-sm text-left rtl:text-right text-body">
+
+                    <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default text-white">
                         <tr>
-                            <th class="p-2">API</th>
-                            <th class="p-2">URL</th>
-                            <th class="p-2">URN</th>
-                            <th class="p-2">URI</th>
-                            <th class="p-2">Notas</th>
+                            <th class="px-6 py-3 font-medium">API</th>
+                            <th class="px-6 py-3 font-medium">URL</th>
+                            <th class="px-6 py-3 font-medium">URN</th>
+                            <th class="px-6 py-3 font-medium">URI</th>
+                            <th class="px-6 py-3 font-medium">Notas</th>
                         </tr>
                     </thead>
+
                     <tbody id="api-table-body"></tbody>
+
                 </table>
             </div>
         </section>
 
         <section class="mb-10">
-            <div class="flex justify-between items-center mb-3">
-                <h2 class="text-xl font-semibold">Galería</h2>
-
-                <button id="reload-btn"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-                    Recargar imágenes
-                </button>
-            </div>
-
             <div id="gallery"
-                class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4">
+                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             </div>
         </section>
-
 
     </div>
 

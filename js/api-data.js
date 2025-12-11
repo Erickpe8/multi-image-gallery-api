@@ -3,7 +3,7 @@ export const apiSources = [
         name: "Picsum Photos",
         baseUrl: "https://picsum.photos",
         urn: "/100/100",
-        notes: "Imágenes aleatorias (recomendado)"
+        notes: "Imágenes aleatorias"
     },
     {
         name: "LoremFlickr (cats)",
